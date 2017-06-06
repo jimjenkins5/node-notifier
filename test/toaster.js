@@ -80,7 +80,7 @@ describe('WindowsToaster', function() {
 
   it('should default to empty app name', function(done) {
     utils.fileCommand = function(notifier, argsList, callback) {
-      expect(testUtils.getOptionValue(argsList, '-appID')).toBe(' ');
+      expect(testUtils.getOptionValue(argsList, '-appID')).toBe('" "');
       done();
     };
     var notifier = new Notify();
@@ -165,8 +165,8 @@ describe('WindowsToaster', function() {
 
   it('should wrap message and title', function(done) {
     utils.fileCommand = function(notifier, argsList, callback) {
-      expect(testUtils.getOptionValue(argsList, '-t')).toBe('Heya');
-      expect(testUtils.getOptionValue(argsList, '-m')).toBe('foo bar');
+      expect(testUtils.getOptionValue(argsList, '-t')).toBe('"Heya"');
+      expect(testUtils.getOptionValue(argsList, '-m')).toBe('"foo bar"');
       done();
     };
     var notifier = new Notify();
@@ -178,10 +178,10 @@ describe('WindowsToaster', function() {
     'should validate and transform sound to default sound if Mac sound is selected',
     function(done) {
       utils.fileCommand = function(notifier, argsList, callback) {
-        expect(testUtils.getOptionValue(argsList, '-t')).toBe('Heya');
+        expect(testUtils.getOptionValue(argsList, '-t')).toBe('"Heya"');
         expect(
           testUtils.getOptionValue(argsList, '-s')
-        ).toBe('Notification.Default');
+        ).toBe('"Notification.Default"');
         done();
       };
       var notifier = new Notify();
@@ -194,7 +194,7 @@ describe('WindowsToaster', function() {
     utils.fileCommand = function(notifier, argsList, callback) {
       expect(
         testUtils.getOptionValue(argsList, '-s')
-      ).toBe('Notification.Default');
+      ).toBe('"Notification.Default"');
       done();
     };
     var notifier = new Notify();
@@ -214,7 +214,7 @@ describe('WindowsToaster', function() {
 
   it('should override sound', function(done) {
     utils.fileCommand = function(notifier, argsList, callback) {
-      expect(testUtils.getOptionValue(argsList, '-s')).toBe('Notification.IM');
+      expect(testUtils.getOptionValue(argsList, '-s')).toBe('"Notification.IM"');
       done();
     };
     var notifier = new Notify();
@@ -228,7 +228,7 @@ describe('WindowsToaster', function() {
 
   it('should parse file protocol URL of icon', function(done) {
     utils.fileCommand = function(notifier, argsList, callback) {
-      expect(argsList[1]).toBe('C:\\node-notifier\\test\\fixture\\coulson.jpg');
+      expect(argsList[1]).toBe('"C:\\node-notifier\\test\\fixture\\coulson.jpg"');
       done();
     };
 
@@ -244,7 +244,7 @@ describe('WindowsToaster', function() {
   it('should not parse local path of icon', function(done) {
     var icon = path.join(__dirname, 'fixture', 'coulson.jpg');
     utils.fileCommand = function(notifier, argsList, callback) {
-      expect(argsList[1]).toBe(icon);
+      expect(argsList[1]).toBe('"' + icon + '"');
       done();
     };
 
@@ -255,7 +255,7 @@ describe('WindowsToaster', function() {
   it('should not parse normal URL of icon', function(done) {
     var icon = 'http://csscomb.com/img/csscomb.jpg';
     utils.fileCommand = function(notifier, argsList, callback) {
-      expect(argsList[1]).toBe(icon);
+      expect(argsList[1]).toBe('"' + icon + '"');
       done();
     };
 
